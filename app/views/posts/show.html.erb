@@ -1,0 +1,106 @@
+<div class="container">
+    <div class="row">
+        <div class="col1 s15">
+          <ul class="tabs">
+            <li class="tab col1 s3 disabled"><a href="#user_name"><%= current_user.name%></a></li>
+            <li class="tab col1 s3"><a class="active" href="#my_posts">My Posts</a></li>
+            <li class="tab col1 s3"><a href="#following_posts">Following's Posts</a></li>
+            <li class="tab col1 s3"><a href="#followers_list">Followers (<%=current_user.followers.length %>)</a></li>
+            <li class="tab col1 s3"><a href="#following_list">Following (<%=current_user.followings.length %>)</a></li>
+            
+          </ul>
+        </div>
+        
+        <div id="my_posts" class="col1 s15">
+            <div class="container">
+                <% @posts.each do |post| %>
+                    <% if post.user.id==current_user.id %>
+                        <%= render partial: "post", object: post %>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+        <div id="following_posts" class="col1 s15">
+            <div class="container">
+                <% @posts.each do |post| %>
+                    <% if current_user.followings.include?(post.user) %>
+                        <%= render partial: "post", object: post %>
+                    <% end %>
+                <% end %>
+            </div>
+            
+        </div>
+    
+        
+    
+        <div id="followers_list" class="col1 s15">
+            <div class="container">
+            <table>
+            <thead>
+              <tr>
+                  <th>name</th>
+                  <th>email</th>
+                  <th>relationship</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+            <% current_user.follower_relations.each do |follower| %>
+              <tr>
+                <td><%= follower.follower.name %></td>
+                <td><%= follower.follower.email %></td>
+                <td>
+                    
+                    
+                    <% if current_user.followings.include?(follower.follower) %>
+                        <%= form_tag follow_path(follower.follower.id), method: :delete, class: "right" do %>
+                            <button class="btn">Unfollow?</button>
+                        <% end %>
+                    <% else %>
+                        <%= form_tag follows_path, method: :post, class: "right" do %>
+                            <input type="hidden" name="followed_id" value="<%=follower.follower.id%>">
+                            <button class="btn">follow?</button>
+                        <% end %>
+                    <% end %>
+                </td>
+              </tr>
+             
+            <% end %>
+            </tbody>
+          </table>
+          </div>
+            
+        </div>
+        
+        <div id="following_list" class="col1 s15">
+            <div class="container">
+                <table>
+                <thead>
+                  <tr>
+                      <th>name</th>
+                      <th>email</th>
+                      <th>relationship</th>
+                  </tr>
+                </thead>
+        
+                <tbody>
+                <% current_user.following_relations.each do |following| %>
+                  <tr>
+                    <td><%= following.followed.name %></td>
+                    <td><%= following.followed.email %></td>
+                    <td>
+                        <%= form_tag follow_path(following.id), method: :delete, class: "right" do %>
+                                <button class="btn">unfollow?</button>
+                        <% end %>
+                    </td>
+                  </tr>
+                 
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
