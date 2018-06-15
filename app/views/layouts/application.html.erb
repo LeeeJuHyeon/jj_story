@@ -1,35 +1,168 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sns</title>
+    <title>JJ_story</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  </head>
-
-  <body>
-    <nav>
-      <div class="nav-wrapper indigo lighten-4">
-        <a href="/" class="brand-logo">SNS title</a>
-
-        </ul>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="/posts">Posts</a></li>
-          <% if user_signed_in? %>
-            <li><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></li>
-            <li><a href="#!"><%= current_user.name %></a></li>
-          <% else %>
-            <li><a href="/users/sign_in">Sign in</a></li>
-            <li><a href="/users/sign_up">Sign up</a></li>
-          <% end %>
-
-        </ul>
-      </div>
-    </nav>
     
-    <%= yield %>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+      /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+      .row.content {height: 1500px}
+      
+      /* Set gray background color and 100% height */
+      .sidenav {
+          height: 100%;
+          width: 300px;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          background-color: white;
+          overflow-x: hidden;
+          padding-top: 20px;
+          color: black;
+      }
+      .sidenav a {
+          padding: 6px 8px 6px 16px;
+          text-decoration: none;
+          font-size: 15px;
+          color: #d9d9d9;
+          display: block;
+      }
+      
+      /* Add a black background color to the top navigation */
+      .topnav {
+          background-color: #333;
+          overflow: hidden;
+      }
+      
+      /* Style the links inside the navigation bar */
+      .topnav a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+      }
+      
+      /* Change the color of links on hover */
+      .topnav a:hover {
+          background-color: #ddd;
+          color: black;
+      }
+      
+      /* Add a color to the active/current link */
+      .topnav a.active {
+          background-color: #4CAF50;
+          color: white;
+      }
+      
+            
+      body {
+          font-family: "Lato", sans-serif;
+      }
+
+      .sidenav a:hover {
+          color: #f1f1f1;
+      }
+      
+      .main {
+          margin-top: 50px;
+          margin-left: 300px; /* Same as the width of the sidenav */ 
+          padding: 0px 10px;
+      }      
+      .main2 {
+          margin-top: 50px;
+          padding: 0px 10px;
+      }
+
+      /* On small screens, set height to 'auto' for sidenav and grid */
+      @media screen and (max-height: 450px) {
+        .sidenav {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 15px;}
+        }
+        .row.content {height: auto;} 
+        
+      }
+      .btn {
+          background-color: #f1f1f1;
+          color: #111;
+          font-size: 10px;
+      }
+      table {
+          border-collapse: collapse;
+          width: 100%;
+      }
+      
+      th, td {
+          padding: 8px;
+          text-align: center;
+          border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+          background-color: #e6f7ff;
+      }
+      
+      tr:hover {background-color:#f5f5f5;}
+
+    </style>
+  </head>
+  <body>
+
+    <div class="topnav navbar-fixed-top">
+      <a class="active" href="/">JJ_story</a>
+      <a href="/posts/show">My Page</a>
+      <a href="/users/edit">Edit Personal Info.</a>
+   
+      <ul class="topnav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li><%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %></li>
+        <% else %>
+          <li><a href="/users/sign_in">Sign in</a></li>
+          <li><a href="/users/sign_up">Sign up</a></li>
+        <% end %>
+      </ul>
+
+    </div>
+
+    <div class="container-fluid">
+      <div class="row content">
+        <div class="col-sm-3 sidenav" style="margin-top:50px">
+            <br>
+            <% if user_signed_in? %>
+                <img src="<%= current_user.profile.url %>" class="img-circle" width="250px" height="250px/>
+                <h2 style="bold"><%= current_user.name %></h2>
+                <a>Email: <%= current_user.email %></a>
+                <a>The number of posts: <%= @posts_count %></a>
+                <a>Follower: <%=current_user.followers.length %></a>
+                <a>Following: <%=current_user.followings.length %></a>
+            <% end %>
+
+          </ul><br>
+            <div class="btn-group-vertical">
+
+              <%= link_to new_post_path do %>
+                <button class="btn btn-success navbar-btn">Write Post</button>
+              <% end %> 
+            </div>
+        </div>
+        <%= yield %>
+      </div>
+    </div>
+
+    
+    
+    
   </body>
 </html>

@@ -1,10 +1,12 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :index
   before_action :check_ownership, only:[:edit, :update, :destroy]
 
   def index
     @posts=Post.all.order('created_at desc')
-    @posts_count=current_user.posts.length
+    if current_user!=nil
+      @posts_count=current_user.posts.length
+    end
   end
   
   def new
