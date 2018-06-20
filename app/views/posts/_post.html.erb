@@ -1,6 +1,6 @@
 
 <div class="main">
-  <div style="border-top:1px solid #003300; border-bottom:10px solid; borderSpacing:15px">
+  <div style="padding-left:50px;padding-right:50px;padding-bottom:50px; border-left:1px solid #003300; border-right:1px solid #003300; border-top:1px solid #003300; border-bottom:10px solid; borderSpacing:15px">
     <hr><h2>
     <% if post.user.profile %>
         <img class="img-circle" height="45px" width="45px"  src="<%= post.user.profile.thumb.url %>">
@@ -24,7 +24,7 @@
     <h5><span><%= post.created_at %></span></h5>
     <hr>
     <% if post.image.url %>
-        <img src="<%=post.image.url %>">
+        <img src="<%=post.image.url %>" class="img-size">
     <% end %>
     
     <p class="pre-line"><%= post.content %></p>      <hr>
@@ -39,6 +39,7 @@
         
         <% if current_user.id==post.user_id %>
             <%= link_to "Delete", post_path(post), method: "delete", class: "right" %>
+            <br/>
             <%= link_to "Edit", edit_post_path(post),class: "right" %>
         <% end %>
     <% else %>

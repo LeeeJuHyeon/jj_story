@@ -1,11 +1,14 @@
 <div class="main">
-    <div class="container" style="margin-top: 50px">
+    <div class="container" style="margin-top: 50px; width:80%">
     <h2>Edit Post</h2>
+    <br>
     <%= form_tag post_path(@post), method: "patch", multipart: true do %> 
         <input type="hidden" name="id" value="<%=@post.content%>"> 
         <div class="input-field"> <%= file_field_tag :image %> </div> 
+        <br>
         <h4>Description</h4>
-        <div class="input-field"><%= text_area_tag :content, @post.content, rows: 100, placeholder: "무슨 생각을 하고 있나요?" %></div>
+        <div class="input-field"><%= text_area_tag :content, @post.content, rows: 100, placeholder: "Description" %></div>
+        <br>
         <div class="input-field"><%= button_tag "Edit", class: "btn" %></div>
     <% end %>
     </div>
