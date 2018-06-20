@@ -5,11 +5,16 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -27,7 +32,7 @@
       /* Set gray background color and 100% height */
       .sidenav {
           height: 100%;
-          width: 300px;
+          width: auto;
           position: fixed;
           z-index: 1;
           top: 0;
@@ -76,7 +81,6 @@
       
             
       body {
-          font-family: "Comic Sans MS", cursive, sans-serif	
       }
 
       .sidenav a:hover {
@@ -102,6 +106,7 @@
         .row.content {height: auto;} 
         
       }
+
       .btn {
           background-color: #f1f1f1;
           color: #111;
@@ -149,28 +154,37 @@
       <div class="row content">
         <div class="col-sm-3 sidenav" style="margin-top:50px">
             <br>
-            <% if user_signed_in? %>
-                <img src="<%= current_user.profile.url %>" class="img-circle" height="auto" width="250px" />
-                <br>
-                <h3 style="bold"><%= current_user.name %></h3>
-                <br>
-                <a>Email: <%= current_user.email %></a>
-                <a>The number of posts: <%= @posts_count %></a>
-                <a>Follower: <%=current_user.followers.length %></a>
-                <a>Following: <%=current_user.followings.length %></a>
-            <% end %>
-
-          </ul><br>
-            <div class="btn-group-vertical">
+ <% if user_signed_in? %>  
+            <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+          
+         <h3 class="w3-center" style="bold"><%= current_user.name %></h3>
+         <hr>
+         <p class="w3-center">
+           
+           <img src="<%= current_user.profile.url %>" class="img-circle" width="200px" height="auto">
+          </p>
+         <hr>
+         <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i> Email: <%= current_user.email %></p>
+         <p><i class="fa fa-book fa-fw w3-margin-right w3-text-theme"></i> The number of posts: <%= @posts_count %></p>
+         <p><i class="fa fa-sign-in fa-fw w3-margin-right w3-text-theme"></i> Follower: <%=current_user.followers.length %></p>
+         <p><i class="fa fa-sign-out fa-fw w3-margin-right w3-text-theme"></i> Following: <%=current_user.followings.length %></p>
+                     <div class="btn-group-vertical">
 
               <%= link_to new_post_path do %>
                 <button class="btn btn-success navbar-btn">Write Post</button>
               <% end %> 
             </div>
         </div>
+      </div>
+      <br>
+          <br>
+          <% end %>
+        </div>
         <%= yield %>
       </div>
     </div>
+
 
     
     

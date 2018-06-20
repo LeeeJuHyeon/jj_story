@@ -7,6 +7,7 @@ class PostsController < ApplicationController
     if current_user!=nil
       @posts_count=current_user.posts.length
     end
+    
   end
   
   def new
@@ -16,6 +17,10 @@ class PostsController < ApplicationController
   def show
     @user=User.find_by(id:params[:id])
     @posts=Post.all.order('created_at desc')
+    
+    if current_user!=nil
+      @posts_count=current_user.posts.length
+    end
   end
   
   def create

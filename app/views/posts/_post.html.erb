@@ -1,9 +1,15 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div class="main">
+
+<div>
+    <br>
+</div>
+<div>
   <div style="padding-left:50px;padding-right:50px;padding-bottom:50px; border-left:1px solid #003300; border-right:1px solid #003300; border-top:1px solid #003300; border-bottom:10px solid; borderSpacing:15px">
     <hr><h2>
-    <% if post.user.profile %>
-        <img class="img-circle" height="45px" width="45px"  src="<%= post.user.profile.thumb.url %>">
+    <% if post.user.profile? %>
+        <img class="img-circle" height="45px" width="45px"  src="<%= post.user.profile.url %>">
     <% end %>
     
     <%= post.user.name %>
@@ -32,9 +38,10 @@
     Like <%= post.likes.size %>s
     <% if current_user!=nil %>
         <% if current_user.is_like?(post) %>
-            <%= link_to "Cancel 'Like'", post_like_path(post), method: "post" %>
+            <button class="w3-button w3-green w3-round w3-tiny"><i class="fa fa-thumbs-up"></i><%= link_to "Unlike", post_like_path(post), method: "post" %></button>
         <% else %>
-            <%= link_to "Like", post_like_path(post), method: "post" %>
+            <button class="w3-button w3-green w3-round w3-tiny"><i class="fa fa-thumbs-up"></i><%= link_to "Like", post_like_path(post), method: "post" %></button>
+            
         <% end %>
         
         <% if current_user.id==post.user_id %>
@@ -67,7 +74,7 @@
         <div class="row">
 	    <% post.comments.each do |comment| %> 
             <div class="col-sm-1 text-center">
-              <img src="<%= comment.user.profile.thumb.url %>" class="img-circle" height="45px" width="45px" alt="Profile">
+              <img src="<%= comment.user.profile.url %>" class="img-circle" height="45px" width="45px" alt="Profile">
             </div>
             <div class="col-sm-11">
                 <h4><%= comment.user.name %> <small><%= comment.created_at %></small></h4>
